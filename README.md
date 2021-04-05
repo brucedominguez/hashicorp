@@ -1,7 +1,7 @@
 # HashiCorp - related projects
 
 ## Consul
-Spin up 3 node cluster
+Spin up 3 node cluster + consul agent
 
 ### To Start
 
