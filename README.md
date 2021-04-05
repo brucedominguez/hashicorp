@@ -23,6 +23,12 @@ sudo vagrant ssh consul-node-1
 # or 
 
 sudo vagrant ssh consul-node-2
+
+# or 
+
+sudo vagrant ssh web-server
 ```
+
+![consul](./images/consul.png)
 
 ## Nomad

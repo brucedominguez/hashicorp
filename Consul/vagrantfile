@@ -51,6 +51,21 @@ Vagrant.configure("2") do |config|
       )
   
       create_consul_host config, nodename, clientIp, consulNode
+      
+      agentIp="192.168.99.11#{node_number}"
+
+      agent = %(
+        {   
+            "node_name": "web-server",
+            "server": false,
+            "advertise_addr": "#{agentIp}",
+            "retry_join": ["#{serverIp}"],
+            "data_dir": "/tmp/consul"
+        }
+    )
+
+    create_consul_host config, "web-server", agentIp, agent
+
     end
 
   end
