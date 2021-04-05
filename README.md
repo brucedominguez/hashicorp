@@ -31,4 +31,10 @@ sudo vagrant ssh web-server
 
 ![consul](./images/consul.png)
 
+### To Stop
+
+```bash
+sudo vagrant down
+```
+
 ## Nomad
