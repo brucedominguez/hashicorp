@@ -1,9 +1,12 @@
 # HashiCorp - related projects
 
 ## Consul
-Spin up 3 node cluster + consul agent
+
+I used this repo to practice spinning up and configuring using HashiCorp Consul with [Getting Started with HashiCorp Consul 2021 from Bryan Krausen](https://www.udemy.com/course/hashicorp-consul/?referralCode=6506321DC305903E7BFA)
 
 ### To Start
+
+To spin up 3 node cluster + consul agent,
 
 ```bash
 sudo vagrant up
