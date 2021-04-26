@@ -6,12 +6,26 @@ Vagrant.configure("2") do |config|
   
           host.vm.hostname = hostname
           host.vm.provision "shell", path: "provision.sh"
-  
           host.vm.network "private_network", ip: ip
           host.vm.provision "shell", inline: "echo '#{initJson}' > /etc/systemd/system/consul.d/config.hcl"
           host.vm.provision "shell", inline: "service consul start"
       end
     end
+
+    def create_web_host(config, hostname, ip, initJson)
+      config.vm.define hostname do |host|
+  
+          host.vm.hostname = hostname
+          host.vm.network "private_network", ip: ip
+          host.vm.provision "shell", path: "provision.sh"
+          host.vm.provision "shell", inline: "echo '#{initJson}' > /etc/systemd/system/consul.d/config.hcl"
+          host.vm.provision "shell", inline: "service consul start"
+          host.vm.provision "shell", path: "web-server.sh"
+          host.vm.provision "shell", inline: "echo front-end-eCommerce registered with consul"
+
+      end
+    end
+  
   
     serverIp = "192.168.99.100"
     serverInit = %(
@@ -64,7 +78,7 @@ Vagrant.configure("2") do |config|
         }
     )
 
-    create_consul_host config, "web-server", agentIp, agent
+    create_web_host config, "web-server", agentIp, agent
 
     end
 

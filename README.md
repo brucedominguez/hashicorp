@@ -6,7 +6,8 @@ I used this repo to practice spinning up and configuring using HashiCorp Consul 
 
 ### To Start
 
-To spin up 3 node cluster + consul agent,
+To spin up 3 node cluster and "web server" node.
+The web server has a web api with the sole function to connect to the Postgres database
 
 ```bash
 sudo vagrant up
@@ -33,6 +34,20 @@ sudo vagrant ssh web-server
 ```
 
 ![consul](./images/consul.png)
+
+The web-server `/health` endpoint responds with `200` if there is a successful connection to the Postgres database (all in docker). 
+Expected response example:
+
+```json
+{
+  "status": "OK",
+  "version": "0.1.0-local",
+  "time": "2021-02-15 07:36:02",
+  "db_information": "PostgreSQL 13.1 (Debian 13.1-1.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
+  "error": ""
+}
+```
+![front-end-eCommerce](./images/healthcheck.png)
 
 ### To Stop
 

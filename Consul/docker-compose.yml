@@ -1,0 +1,26 @@
+version: '3.8'
+services: 
+  postgres:
+    image: "postgres"
+    environment: 
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postres
+    ports: 
+      - "5432:5432"
+    volumes: 
+      - ./sql/:/docker-entrypoint-initdb.d
+
+  api:
+    image: "brucedominguez/web-api-healthcheck:latest"
+    restart: on-failure
+    environment: 
+        - POSTGRES_HOST=postgres
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=postres
+    ports:
+      - "8080:8080"
+    depends_on: 
+      - "postgres"
