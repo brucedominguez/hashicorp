@@ -47,9 +47,22 @@ Expected response example:
   "error": ""
 }
 ```
+
 ![front-end-eCommerce](./images/healthcheck.png)
 
-### To Stop
+### Check the service catalog for the service
+
+```bash
+dig @192.168.99.100 -p 8600 front-end-eCommerce.service.consul
+```
+
+## Check the dns for the service
+
+```bash
+dig @192.168.99.100 -p 8600 front-end-eCommerce.service.consul
+```
+
+## To Stop
 
 ```bash
 sudo vagrant down
