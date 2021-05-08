@@ -2,7 +2,7 @@
 
 # update and unzip
 dpkg -s unzip &>/dev/null || {
-	sudo apt-get -y update && sudo apt-get install -y unzip
+	sudo apt-get -y update && sudo apt-get install -y unzip jq
 }
 
 # install consul 

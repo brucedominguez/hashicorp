@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
       end
     end
 
-    def create_web_host(config, hostname, ip, initJson)
+    def create_web_host(config, hostname, ip, initJson, service_hcl)
       config.vm.define hostname do |host|
   
           host.vm.hostname = hostname
@@ -20,12 +20,12 @@ Vagrant.configure("2") do |config|
           host.vm.provision "shell", path: "provision.sh"
           host.vm.provision "shell", inline: "echo '#{initJson}' > /etc/systemd/system/consul.d/config.hcl"
           host.vm.provision "shell", inline: "service consul start"
+          host.vm.provision "shell", inline: "echo '#{service_hcl}' > /home/vagrant/service.hcl"
           host.vm.provision "shell", path: "web-server.sh"
           host.vm.provision "shell", inline: "echo front-end-eCommerce registered with consul"
 
       end
     end
-  
   
     serverIp = "192.168.99.100"
     serverInit = %(
@@ -65,20 +65,42 @@ Vagrant.configure("2") do |config|
       )
   
       create_consul_host config, nodename, clientIp, consulNode
+    
+    end
       
-      agentIp="192.168.99.11#{node_number}"
+    for server_number in 1..2
+      servername="web-server-#{server_number}"
+      agentIp="192.168.99.15#{server_number}"
 
-      agent = %(
+     agent = %(
         {   
-            "node_name": "web-server",
+            "node_name": "#{servername}",
             "server": false,
             "advertise_addr": "#{agentIp}",
             "retry_join": ["#{serverIp}"],
             "data_dir": "/tmp/consul"
         }
-    )
+     )
 
-    create_web_host config, "web-server", agentIp, agent
+     service_hcl = %(
+      {
+        "service": {
+          "id": "#{servername}",
+          "name": "front-end-eCommerce",
+          "tags": ["v#{server_number}.0.0", "production"],
+          "address": "#{agentIp}",
+          "port": 80,
+          "check": {
+             "id": "web",
+             "name": "Health check",
+             "http": "http://localhost:8080/health",
+             "method" : "GET",
+             "interval": "10s"
+           }
+      }
+     )
+
+    create_web_host config, servername, agentIp, agent, service_hcl
 
     end
 

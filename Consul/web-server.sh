@@ -39,6 +39,14 @@ if [ ! -f /home/vagrant/service.hcl ]; then
 	cp /vagrant/service.hcl /home/vagrant/service.hcl
 fi
 
+if [ ! -f /home/vagrant/prepared-query-v1.json ]; then
+	cp /vagrant/prepared-query-v1.json /home/vagrant/prepared-query-v1.json
+fi
+
+if [ ! -f /home/vagrant/prepared-query-v12.json ]; then
+	cp /vagrant/prepared-query-v2.json /home/vagrant/prepared-query-v2.json
+fi
+
 ## Register service
 consul services register service.hcl 
 

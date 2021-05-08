@@ -1,0 +1,7 @@
+{
+    "name": "eCommerce",
+    "service": {
+      "service": "front-end-eCommerce",
+      "tags": ["v1.0.0", "production"]
+     }
+}
