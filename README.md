@@ -2,7 +2,7 @@
 
 ## Consul
 
-[Consul Resource](./consul/README.md)
+[Consul Resource](./Consul/README.md)
 
 This resource is will spin up a 3 Node Consul Cluster + 2 Client nodes.
 
