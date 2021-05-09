@@ -83,6 +83,8 @@ curl --request POST --data @prepared-query-v1.json http://192.168.99.101:8500/v1
 Check the results by using the ID provided to only get `v1.0.0` of service front-end-eCommerce
 
 ```bash
+curl http://192.168.99.101:8500/v1/query/1cb38a85-c4ff-130c-4ae6-2d11321a79eb | jq ## note your ID will be different
+
 [
   {
     "ID": "1cb38a85-c4ff-130c-4ae6-2d11321a79eb",
@@ -129,7 +131,6 @@ dig @192.168.99.101 -p 8600 eCommerce.query.consul
 To update the query to show the new version `v2.0.0`, update the query by running
 
 ```bash
-
 curl --request PUT --data @prepared-query-v2.json http://192.168.99.101:8500/v1/query/<YOUR QUERY ID>
 ```
 
