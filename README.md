@@ -56,10 +56,102 @@ Expected response example:
 dig @192.168.99.100 -p 8600 front-end-eCommerce.service.consul
 ```
 
-## Check the dns for the service
+### Check the dns for the service
 
 ```bash
 dig @192.168.99.100 -p 8600 front-end-eCommerce.service.consul
+```
+
+### Prepared query
+
+SSH onto the `consul-server`
+
+```bash
+sudo vagrant ssh consul-server
+```
+
+Create the prepared query (prepared-query-v1.json file already exists on server) by running:
+
+```bash
+curl --request POST --data @prepared-query-v1.json http://192.168.99.101:8500/v1/query | jq
+
+{
+   "ID":"1cb38a85-c4ff-130c-4ae6-2d11321a79eb" ## this will be different for you
+}
+```
+
+Check the results by using the ID provided to only get `v1.0.0` of service front-end-eCommerce
+
+```bash
+[
+  {
+    "ID": "1cb38a85-c4ff-130c-4ae6-2d11321a79eb",
+    "Name": "eCommerce",
+    "Session": "",
+    "Token": "",
+    "Template": {
+      "Type": "",
+      "Regexp": "",
+      "RemoveEmptyTags": false
+    },
+    "Service": {
+      "Service": "front-end-eCommerce",
+      "Failover": {
+        "NearestN": 0,
+        "Datacenters": null
+      },
+      "OnlyPassing": false,
+      "IgnoreCheckIDs": null,
+      "Near": "",
+      "Tags": [
+        "v1.0.0",
+        "production"
+      ],
+      "NodeMeta": null,
+      "ServiceMeta": null,
+      "Connect": false
+    },
+    "DNS": {
+      "TTL": ""
+    },
+    "CreateIndex": 258,
+    "ModifyIndex": 258
+  }
+]
+```
+
+Alternatively you can perform a DNS query against the prepared query to get the IP of v1.0.0 of the service
+
+```bash
+dig @192.168.99.101 -p 8600 eCommerce.query.consul
+```
+
+To update the query to show the new version `v2.0.0`, update the query by running
+
+```bash
+
+curl --request PUT --data @prepared-query-v2.json http://192.168.99.101:8500/v1/query/<YOUR QUERY ID>
+```
+
+Test by running a `dig @192.168.99.101 -p 8600 eCommerce.query.consul` and the address should now be `192.168.99.152`
+
+### Use Consul KV to pull env vars
+
+Environment variables used for the `Docker-compose` are set using the [web-server.sh](./web-server.sh)
+
+Consul KV path
+
+```bash
+POSTGRES_HOST=apps/eCommerce/database_host
+POSTGRES_USER=apps/eCommerce/database_user
+POSTGRES_PASSWORD=apps/eCommerce/database_password
+POSTGRES_DB=apps/eCommerce/database_db
+```
+
+Example, to retrieve the key/value database_host
+
+```bash
+consul kv get apps/eCommerce/database_host
 ```
 
 ## To Stop

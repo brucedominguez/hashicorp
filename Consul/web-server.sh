@@ -32,6 +32,14 @@ fi
 
 ## Start Webapi + Postgres DB
 cd /home/vagrant/
+
+## Grab env variables from Consul KV
+export POSTGRES_HOST=$(consul kv get apps/eCommerce/database_host)
+export POSTGRES_USER=$(consul kv get apps/eCommerce/database_user)
+export POSTGRES_PASSWORD=$(consul kv get apps/eCommerce/database_password)
+export POSTGRES_DB=$(consul kv get apps/eCommerce/database_db)
+echo "Environment variables set by Consul"
+
 docker-compose up -d
 
 ## Register webapi service
