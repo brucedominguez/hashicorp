@@ -64,7 +64,7 @@ consul-template -template "config.yaml.tmpl:config.yaml" --once
 
 ## Grab env variables from Consul KV and start docker-compose
 echo "Grabbing Environment Variables set by Consul and starting docker-compose"
-envconsul -upcase -prefix apps/eCommerce docker-compose up -d
+envconsul -upcase -prefix $ENVIRONMENT/apps/eCommerce docker-compose up -d
 
 ## Register webapi service
 if [ ! -f /home/vagrant/service.hcl ]; then

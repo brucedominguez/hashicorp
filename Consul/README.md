@@ -154,7 +154,7 @@ consul kv get production/apps/eCommerce/POSTGRES_HOST
 When the web-server starts it will use the `envconsul` binary to grab the variables above to use for the docker-compose startup.
 
 ```bash
-envconsul -upcase -prefix apps/eCommerce docker-compose up -d
+envconsul -upcase -prefix production/apps/eCommerce docker-compose up -d
 ```
 
 ### Use consul-template to update config files on startup
