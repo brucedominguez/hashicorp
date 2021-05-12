@@ -30,17 +30,41 @@ if [ ! -f /home/vagrant/docker-compose.yml ]; then
 	cp /vagrant/docker-compose.yml /home/vagrant/docker-compose.yml
 fi
 
-## Start Webapi + Postgres DB
+# install envconsul - used to grab values from consul
+if [ ! -f /usr/local/bin/envconsul ]; then
+	cd /usr/local/bin
+
+	version='0.11.0'
+	wget https://releases.hashicorp.com/envconsul/${version}/envconsul_${version}_linux_amd64.zip -O envconsul.zip
+	unzip envconsul.zip
+	rm envconsul.zip
+fi
+
+# install envconsul - used to grab values from consul
+if [ ! -f /usr/local/bin/consul-template ]; then
+	cd /usr/local/bin
+
+	version='0.25.2'
+	wget https://releases.hashicorp.com/consul-template/${version}/consul-template_${version}_linux_amd64.zip -O consul-template.zip
+	unzip consul-template.zip
+	rm consul-template.zip
+fi
+
+## Set Environment Variable
+export ENVIRONMENT="production"
+
+## Use Consul-template to set arbitrary config file based on Environment
+if [ ! -f /home/vagrant/config.yaml.tmpl ]; then
+	cp /vagrant/config.yaml.tmpl /home/vagrant/config.yaml.tmpl
+fi
+
 cd /home/vagrant/
+consul-template -template "config.yaml.tmpl:config.yaml" --once
 
-## Grab env variables from Consul KV
-export POSTGRES_HOST=$(consul kv get apps/eCommerce/database_host)
-export POSTGRES_USER=$(consul kv get apps/eCommerce/database_user)
-export POSTGRES_PASSWORD=$(consul kv get apps/eCommerce/database_password)
-export POSTGRES_DB=$(consul kv get apps/eCommerce/database_db)
-echo "Environment variables set by Consul"
 
-docker-compose up -d
+## Grab env variables from Consul KV and start docker-compose
+echo "Grabbing Environment Variables set by Consul and starting docker-compose"
+envconsul -upcase -prefix apps/eCommerce docker-compose up -d
 
 ## Register webapi service
 if [ ! -f /home/vagrant/service.hcl ]; then

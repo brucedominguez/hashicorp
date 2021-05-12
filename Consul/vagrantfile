@@ -1,8 +1,8 @@
 $addConsulKV = <<addConsulKV
-consul kv put apps/eCommerce/database_host postgres
-consul kv put apps/eCommerce/database_user postgres
-consul kv put apps/eCommerce/database_password postgres
-consul kv put apps/eCommerce/database_db postgres
+consul kv put production/apps/eCommerce/POSTGRES_HOST postgres
+consul kv put production/apps/eCommerce/POSTGRES_USER postgres
+consul kv put production/apps/eCommerce/POSTGRES_PASSWORD postgres
+consul kv put production/apps/eCommerce/POSTGRES_DB postgres
 addConsulKV
 
 Vagrant.configure("2") do |config|
@@ -32,7 +32,6 @@ Vagrant.configure("2") do |config|
           host.vm.provision "shell", inline: "echo '#{service_hcl}' > /home/vagrant/service.hcl"
           host.vm.provision "shell", path: "web-server.sh"
           host.vm.provision "shell", inline: "echo front-end-eCommerce registered with consul"
-
       end
     end
   

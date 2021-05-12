@@ -1,0 +1,4 @@
+{{ $ENVIRONMENT :=  env "ENVIRONMENT" }}
+environment: {{ $ENVIRONMENT }}
+database_host: {{ printf "%s/apps/eCommerce/POSTGRES_HOST" $ENVIRONMENT | key }}
+database_name: {{ printf "%s/apps/eCommerce/POSTGRES_DB" $ENVIRONMENT | key }}

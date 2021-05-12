@@ -137,16 +137,53 @@ Environment variables used for the `Docker-compose` are set using the [web-serve
 Consul KV path
 
 ```bash
-POSTGRES_HOST=apps/eCommerce/database_host
-POSTGRES_USER=apps/eCommerce/database_user
-POSTGRES_PASSWORD=apps/eCommerce/database_password
-POSTGRES_DB=apps/eCommerce/database_db
+POSTGRES_HOST=production/apps/eCommerce/POSTGRES_HOST
+POSTGRES_USER=production/apps/eCommerce/POSTGRES_USER
+POSTGRES_PASSWORD=production/apps/eCommerce/POSTGRES_PASSWORD
+POSTGRES_DB=production/apps/eCommerce/POSTGRES_DB
 ```
 
 Example, to retrieve the key/value database_host
 
 ```bash
-consul kv get apps/eCommerce/database_host
+consul kv get production/apps/eCommerce/POSTGRES_HOST
+```
+
+### Use envconsul to set service variables
+
+When the web-server starts it will use the `envconsul` binary to grab the variables above to use for the docker-compose startup.
+
+```bash
+envconsul -upcase -prefix apps/eCommerce docker-compose up -d
+```
+
+### Use consul-template to update config files on startup
+
+Consul-template can be used to pull Key/Value pairs and update template files.
+In this example the `config.yaml.tmpl` file on the web-server's (below), uses the set environment variable `ENVIRONMENT` to pull down the correct consul key/value.
+In this case the `ENVIRONMENT` is `production` and so will grab `production/apps/eCommerce/POSTGRES_HOST` values.
+
+```go
+{{ $ENVIRONMENT :=  env "ENVIRONMENT" }}
+environment: {{ $ENVIRONMENT }}
+database_host: { printf "%s/apps/eCommerce/POSTGRES_HOST" $ENVIRONMENT | key}}
+database_name: {{ printf "%s/apps/eCommerce/POSTGRES_DB" $ENVIRONMENT | key}}
+```
+
+This is done by the below command in the `web-server.sh` script and creating a `config.yaml` file with the correct values
+
+```bash
+consul-template -template "config.yaml.tmpl:config.yaml" --once
+```
+
+To view SSH on to the web-server `sudo vagrant ssh web-server-1` and view the file
+
+```bash
+$  cat config.yaml
+
+environment: production
+database_host: postgres
+database_name: postgres
 ```
 
 ## To Stop
