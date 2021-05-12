@@ -1,6 +1,6 @@
 # HashiCorp - Consul
 
-I used this repo to practice spinning up and configuring using HashiCorp Consul with [Getting Started with HashiCorp Consul 2021 from Bryan Krausen](https://www.udemy.com/course/hashicorp-consul/?)
+I used this repo to practice spinning up and configuring using HashiCorp Consul with [Getting Started with HashiCorp Consul 2021 from Bryan Krausen](https://www.udemy.com/course/hashicorp-consul)
 
 ## To Start
 
@@ -27,7 +27,7 @@ sudo vagrant ssh web-server-1
 sudo vagrant ssh web-server-2
 ```
 
-![consul](./images/consul.png)
+![consul](../images/consul.png)
 
 The web-server `/health` endpoint responds with `200` if there is a successful connection to the Postgres database (all in docker). 
 Expected response example:
