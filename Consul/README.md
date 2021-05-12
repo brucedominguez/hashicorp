@@ -42,7 +42,7 @@ Expected response example:
 }
 ```
 
-![front-end-eCommerce](./images/healthcheck.png)
+![front-end-eCommerce](../images/healthcheck.png)
 
 ### Check the service catalog for the service
 
