@@ -8,6 +8,6 @@ In this repo there is 2 examples:
 
 <img src=../images/hashicorp_consul.png alt="consul" height="300">
 
-* [Service-mesh](./service-mesh) - This resource is will spin up a 3 Node Consul Cluster + 2 Client nodes using Vagrant on your local machine with Consul connect enabled.
+* [Service-mesh](./service-mesh/README.md) - This resource is will spin up a 3 Node Consul Cluster + 2 Client nodes using Vagrant on your local machine with Consul connect enabled.
 
 <img src=../images/consul-connect.png alt="consul" height="200">
