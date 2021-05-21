@@ -9,6 +9,17 @@ This example is used to practice and understand concepts:
 * Use of Envconsul
 * Use of Consul-template
 
+## Requirements
+
+* Vagrant
+
+```bash
+brew tap hashicorp/tap
+brew install hashicorp/tap/vagrant
+```
+
+* [Oracle Virtual Box](https://www.virtualbox.org/wiki/Downloads)
+
 ## To Start
 
 To spin up 3 node cluster and "web server" node.
