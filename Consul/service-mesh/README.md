@@ -9,6 +9,17 @@ This example leverages the learn.hashicorp example of [Secure Service Communicat
 
 ![consul-connect](../../images/consul-connect.png)
 
+## Requirements
+
+* Vagrant
+
+```bash
+brew tap hashicorp/tap
+brew install hashicorp/tap/vagrant
+```
+
+* [Oracle Virtual Box](https://www.virtualbox.org/wiki/Downloads)
+
 ## To Start
 
 To spin up 3 node cluster consul cluster and 2 servers with Envoy enabled as the sidecar proxy.
