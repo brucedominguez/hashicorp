@@ -44,17 +44,29 @@ Vagrant.configure("2") do |config|
       {
           "log_level": "INFO",
           "server": true,
-          "ui": true,
           "advertise_addr": "#{serverIp}",
           "client_addr": "0.0.0.0",
           "data_dir": "/tmp/consul",
           "bootstrap_expect": 1,
+          "encrypt": "jgRZfrj41tdxYNDElhIbDnTgRBEl1kifAYIn1KcIMjc=",
+          "encrypt_verify_incoming": true,
+          "encrypt_verify_outgoing": true,
+          "verify_server_hostname": true,
+          "ca_file": "/etc/systemd/system/consul.d/consul-agent-ca.pem",
+          "cert_file": "/etc/systemd/system/consul.d/dc1-server-consul-0.pem",
+          "key_file": "/etc/systemd/system/consul.d/dc1-server-consul-0-key.pem",
+          "ui_config": {
+            "enabled": true
+          },
           "ports": {
             "grpc": 8502
           },
+          "auto_encrypt": {
+            "allow_tls": true
+          },
           "connect": {
             "enabled": true
-          }
+          },
           "performance": {
             "raft_multiplier": 1
           }
@@ -71,17 +83,28 @@ Vagrant.configure("2") do |config|
           {   
               "log_level": "INFO",
               "server": true,
-              "ui": true,
               "client_addr": "0.0.0.0",
               "advertise_addr": "#{clientIp}",
               "retry_join": ["#{serverIp}"],
               "data_dir": "/tmp/consul",
+              "encrypt": "jgRZfrj41tdxYNDElhIbDnTgRBEl1kifAYIn1KcIMjc=",
+              "encrypt_verify_incoming": true,
+              "encrypt_verify_outgoing": true,
+              "ca_file": "/etc/systemd/system/consul.d/consul-agent-ca.pem",
+              "cert_file": "/etc/systemd/system/consul.d/dc1-server-consul-0.pem",
+              "key_file": "/etc/systemd/system/consul.d/dc1-server-consul-0-key.pem",
+              "auto_encrypt": {
+                "allow_tls": true
+              },
+              "ui_config": {
+                "enabled": true
+              },
               "ports": {
                 "grpc": 8502
               },
               "connect": {
                 "enabled": true
-              }
+              },
               "performance": {
                 "raft_multiplier": 1
               }
@@ -101,6 +124,14 @@ Vagrant.configure("2") do |config|
               "advertise_addr": "192.168.99.151",
               "retry_join": ["#{serverIp}"],
               "data_dir": "/tmp/consul",
+              "encrypt": "jgRZfrj41tdxYNDElhIbDnTgRBEl1kifAYIn1KcIMjc=",
+              "encrypt_verify_incoming": true,
+              "encrypt_verify_outgoing": true,
+              "verify_server_hostname": true,
+              "ca_file": "/etc/systemd/system/consul.d/consul-agent-ca.pem",
+              "auto_encrypt": {
+                "tls": true
+              },
               "ports": {
                 "grpc": 8502
               },
@@ -120,6 +151,14 @@ Vagrant.configure("2") do |config|
               "advertise_addr": "192.168.99.152",
               "retry_join": ["#{serverIp}"],
               "data_dir": "/tmp/consul",
+              "encrypt": "jgRZfrj41tdxYNDElhIbDnTgRBEl1kifAYIn1KcIMjc=",
+              "encrypt_verify_incoming": true,
+              "encrypt_verify_outgoing": true,
+              "verify_server_hostname": true,
+              "ca_file": "/etc/systemd/system/consul.d/consul-agent-ca.pem",
+              "auto_encrypt": {
+                "tls": true
+              },
               "ports": {
                 "grpc": 8502
               },

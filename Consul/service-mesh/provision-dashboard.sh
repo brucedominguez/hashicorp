@@ -15,6 +15,12 @@ if [ ! -f /home/vagrant/dashboard.hcl ]; then
 	cp /vagrant/dashboard.hcl /home/vagrant/dashboard.hcl
 fi
 
+## Copy server tls certs - consul-agent-ca.pem
+if [ ! -f /etc/systemd/system/consul.d/consul-agent-ca.pem ]; then
+	cd /home/vagrant/
+	cp /vagrant/consul-agent-ca.pem /etc/systemd/system/consul.d/consul-agent-ca.pem
+fi
+
 ## Register service
 consul services register dashboard.hcl
 

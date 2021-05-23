@@ -15,6 +15,12 @@ if [ ! -f /home/vagrant/counting.hcl ]; then
 	cp /vagrant/counting.hcl /home/vagrant/counting.hcl
 fi
 
+## Copy server tls certs - consul-agent-ca.pem
+if [ ! -f /etc/systemd/system/consul.d/consul-agent-ca.pem ]; then
+	cd /home/vagrant/
+	cp /vagrant/consul-agent-ca.pem /etc/systemd/system/consul.d/consul-agent-ca.pem
+fi
+
 ## Register service
 consul services register counting.hcl
 
