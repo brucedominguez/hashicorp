@@ -237,8 +237,6 @@ Restart the consul service on the nodes with `sudo systemctl restart consul`
             Encrypt: Gossip: true, TLS-Outgoing: false, TLS-Incoming: false, Auto-Encrypt-TLS: false
 ```
 
-```
-
 ### Secure Consul agent communication with TLS encryption
 
 Initialize the built-in CA. 
