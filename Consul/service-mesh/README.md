@@ -239,7 +239,7 @@ Restart the consul service on the nodes with `sudo systemctl restart consul`
 
 ### Secure Consul agent communication with TLS encryption
 
-Initialize the built-in CA. 
+Initialize the built-in CA.
 This will create the `consul-agent-key.pem` and `consul-agent-ca.pem`
 
 ```bash
@@ -306,6 +306,7 @@ Update the `config.hcl` with the below information for `Auto encryption`
            Encrypt: Gossip: true, TLS-Outgoing: true, TLS-Incoming: false, Auto-Encrypt-TLS: true
 ==> Log data will now stream in as it occurs:
 ```
+
 ## To Stop
 
 ```bash
